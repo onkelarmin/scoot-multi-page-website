@@ -1,0 +1,91 @@
+---
+// Library imports
+import { getImage } from "astro:assets"
+
+// Type imports
+import type { ImageMetadata } from "astro"
+
+type Props = {
+  imageDesktop?: ImageMetadata
+  imageTablet?: ImageMetadata
+  imageMobile: ImageMetadata
+  format?: string
+  quality?: string
+  altText: string
+  breakpointDesktop?: string
+  breakpointTablet?: string
+}
+
+const {
+  imageDesktop,
+  imageTablet,
+  imageMobile,
+  format = "webp",
+  quality,
+  altText,
+  breakpointDesktop = "60em",
+  breakpointTablet = "45em",
+} = Astro.props
+
+// Optimizing images
+const imageDesktopOpt = imageDesktop
+  ? await getImage({
+      src: imageDesktop,
+      format,
+      quality,
+    })
+  : undefined
+
+const imageTabletOpt = imageTablet
+  ? await getImage({
+      src: imageTablet,
+      format,
+      quality,
+    })
+  : undefined
+
+const imageMobileOpt = await getImage({
+  src: imageMobile,
+  format,
+  quality,
+})
+
+// Creating string fragments
+const strDesktop = imageDesktopOpt
+  ? `<source
+    media="(min-width: ${breakpointDesktop})"
+    srcset=${imageDesktopOpt.src}
+  />`
+  : ""
+
+const strTablet = imageTabletOpt
+  ? `<source
+    media="(min-width: ${breakpointTablet})"
+    srcset=${imageTabletOpt.src}
+  />`
+  : ""
+
+const strMobile = `<source srcset=${imageMobileOpt.src}>`
+---
+
+<picture>
+  <Fragment set:html={strDesktop} />
+  <Fragment set:html={strTablet} />
+  <Fragment set:html={strMobile} />
+  <img
+    src={imageDesktopOpt
+      ? imageDesktopOpt.src
+      : imageTabletOpt
+        ? imageTabletOpt.src
+        : imageMobileOpt.src}
+    alt={altText}
+  />
+</picture>
+
+<style lang="scss">
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+</style>

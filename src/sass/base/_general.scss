@@ -1,0 +1,23 @@
+@use "../abstracts/" as *;
+
+body {
+  font-family: $body-font-family;
+  font-weight: $body-font-weight;
+  font-size: $body-font-size;
+  color: $body-text-color;
+  background-color: $body-background-color;
+  line-height: $body-line-height;
+}
+
+a {
+  color: $link-color;
+  transition: color 150ms ease-in;
+}
+
+a:focus{
+  outline: 0px solid transparent;
+}
+
+a:is(:hover, :focus-visible) {
+  color: $link-color-hover;
+}

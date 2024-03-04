@@ -1,0 +1,43 @@
+---
+type Props = {
+  classes?: string
+}
+
+const { classes, ...rest } = Astro.props
+---
+
+<button class:list={["btn", classes]} {...rest}>
+  <slot />
+</button>
+
+<style lang="scss">
+  @use "../sass/abstracts" as *;
+
+  .btn {
+    --border-width: 3px;
+
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1.66;
+    font-family: $font-family-accent;
+    font-size: $body-font-size;
+    font-weight: $font-weight-bold;
+    letter-spacing: normal;
+    text-transform: none;
+    background-color: $color-brand-400;
+    border: none;
+    outline: var(--border-width) solid $color-brand-400;
+    outline-offset: calc(var(--border-width) * -1);
+    color: $color-neutral-000;
+    padding: 0.6875rem 2.25rem;
+    transition:
+      color 250ms ease-in,
+      background-color 250ms ease-in;
+
+    &:is(:hover, :focus-visible) {
+      background-color: transparent;
+      color: $color-brand-400;
+    }
+  }
+</style>

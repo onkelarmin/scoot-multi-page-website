@@ -1,0 +1,74 @@
+@use '../abstracts/' as *;
+
+// Heading 1
+$heading-1-font-family: $heading-font-family-default;
+$heading-1-font-size: $font-size-900;
+$heading-1-font-weight: $heading-font-weight-default;
+$heading-1-color: $color-neutral-000;
+$heading-1-line-height: $heading-line-height-default;
+$heading-1-letter-spacing: -2.5px;
+$heading-1-text-transform: $heading-text-transform-default;
+
+// Heading 2
+$heading-2-font-family: $heading-font-family-default;
+$heading-2-font-size: $font-size-700;
+$heading-2-font-weight: $heading-font-weight-default;
+$heading-2-color: $heading-color-default;
+$heading-2-line-height: $heading-line-height-default;
+$heading-2-letter-spacing: -2.14px;
+$heading-2-text-transform: $heading-text-transform-default;
+
+// Heading 3
+$heading-3-font-family: $heading-font-family-default;
+$heading-3-font-size: $font-size-600;
+$heading-3-font-weight: $heading-font-weight-default;
+$heading-3-color: $heading-color-default;
+$heading-3-line-height: 1.2;
+$heading-3-letter-spacing: -1.79px;
+$heading-3-text-transform: $heading-text-transform-default;
+
+// Heading 4
+$heading-4-font-family: $font-family-base;
+$heading-4-font-size: $font-size-500;
+$heading-4-font-weight: $heading-font-weight-default;
+$heading-4-color: $heading-color-default;
+$heading-4-line-height: 1.166;
+$heading-4-letter-spacing: -1.07px;
+$heading-4-text-transform: $heading-text-transform-default;
+
+.heading-1 {
+  font-family: $heading-1-font-family;
+  font-size: $heading-1-font-size;
+  font-weight: $heading-1-font-weight;
+  color: $heading-1-color;
+  line-height: $heading-1-line-height;
+  letter-spacing: $heading-1-letter-spacing;
+  text-transform: $heading-1-text-transform;
+}
+.heading-2 {
+  font-family: $heading-2-font-family;
+  font-size: $heading-2-font-size;
+  font-weight: $heading-2-font-weight;
+  color: $heading-2-color;
+  line-height: $heading-2-line-height;
+  letter-spacing: $heading-2-letter-spacing;
+  text-transform: $heading-2-text-transform;
+}
+.heading-3 {
+  font-family: $heading-3-font-family;
+  font-size: $heading-3-font-size;
+  font-weight: $heading-3-font-weight;
+  color: $heading-3-color;
+  line-height: $heading-3-line-height;
+  letter-spacing: $heading-3-letter-spacing;
+  text-transform: $heading-3-text-transform;
+}
+.heading-4 {
+  font-family: $heading-4-font-family;
+  font-size: $heading-4-font-size;
+  font-weight: $heading-4-font-weight;
+  color: $heading-4-color;
+  line-height: $heading-4-line-height;
+  letter-spacing: $heading-4-letter-spacing;
+  text-transform: $heading-4-text-transform;
+}

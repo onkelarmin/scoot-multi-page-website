@@ -1,0 +1,172 @@
+---
+// Library imports
+import { Icon } from "astro-icon/components"
+
+// Component imports
+import Button from "./Button.astro"
+import PrimaryNavToggle from "./PrimaryNavToggle.astro"
+---
+
+<nav class="primary-nav">
+  <PrimaryNavToggle
+    width="20px"
+    lineHeight="3.69px"
+    gap="2.46px"
+    color="var(--brand-400)"
+  />
+  <div
+    id="primary-nav__menu"
+    class="primary-nav__menu"
+    aria-label="Navigation"
+    role="dialog"
+    data-open="false"
+  >
+    <ul class="primary-nav__list">
+      <!-- <li><a href="/">Home</a></li> -->
+      <li><a href="/about">About</a></li>
+      <li><a href="/location">Location</a></li>
+      <li><a href="/careers">Careers</a></li>
+      <li><Button>Get scootin</Button></li>
+    </ul>
+  </div>
+</nav>
+
+<style lang="scss">
+  @use "../sass/abstracts" as *;
+
+  .primary-nav {
+    width: 100%;
+
+    &__list {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    li:last-child {
+      margin-inline-start: auto;
+    }
+
+    a {
+      font-family: $font-family-accent;
+      text-decoration: none;
+
+      &.active {
+        display: none;
+      }
+    }
+
+    // Mobile
+    @include mq(medium, max) {
+      grid-area: stack;
+
+      &__menu {
+        position: fixed;
+        top: 4rem;
+        left: 0;
+        bottom: 0;
+        width: 68%;
+        transform: translateX(-100vw);
+        transition: 0.5s ease-in-out;
+
+        &[data-open="true"] {
+          transform: translateX(0);
+        }
+      }
+
+      &__list {
+        height: 100%;
+        flex-direction: column;
+        align-items: start;
+        gap: 1.5rem;
+        background-color: $color-neutral-900;
+        padding: 4rem 2rem 1.5rem 2rem;
+      }
+
+      li:last-child {
+        margin-block-start: auto;
+        margin-inline: auto;
+      }
+
+      a {
+        color: $color-neutral-000;
+      }
+    }
+  }
+</style>
+
+<script>
+  // Import body-scroll-lock
+  import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock"
+
+  // Variables
+  const btnToggle = document.querySelector("#btnToggle") as HTMLButtonElement
+  const primaryNav = document.querySelector(".primary-nav") as HTMLElement
+  const primaryNavLinks = [...primaryNav.querySelectorAll("a")]
+  const primaryNavMenu = primaryNav.querySelector(
+    ".primary-nav__menu"
+  )! as HTMLElement
+  const main = document.querySelector("main") as HTMLElement
+  const body = document.querySelector("body") as HTMLBodyElement
+  const media = window.matchMedia("(width < 45em)")
+  const isMobile = media.matches
+  const currentURL = window.location.href
+
+  // Removing active page from Navigation
+  primaryNavLinks.forEach((link) => {
+    if (link.href === currentURL) {
+      link.classList.add("active")
+    }
+  })
+
+  // Functions
+  function setupPrimaryNav(isMobile: boolean) {
+    if (isMobile) {
+      // is mobile
+      primaryNavMenu.setAttribute("inert", "")
+      primaryNavMenu.style.transition = "none"
+    } else {
+      // is tablet/desktop
+      primaryNavMenu.removeAttribute("inert")
+    }
+  }
+
+  function openMobileMenu() {
+    btnToggle.setAttribute("aria-expanded", "true")
+    primaryNavMenu.setAttribute("data-open", "true")
+    main.setAttribute("data-overlay", "true")
+    primaryNavMenu.removeAttribute("inert")
+    primaryNavMenu.removeAttribute("style")
+    main.setAttribute("inert", "")
+    disableBodyScroll(body)
+    btnToggle.focus()
+  }
+  function closeMobileMenu() {
+    btnToggle.setAttribute("aria-expanded", "false")
+    primaryNavMenu.setAttribute("data-open", "false")
+    main.setAttribute("data-overlay", "false")
+    primaryNavMenu.setAttribute("inert", "")
+    main.removeAttribute("inert")
+    enableBodyScroll(body)
+    btnToggle.focus()
+
+    setTimeout(() => {
+      primaryNavMenu.style.transition = "none"
+    }, 500)
+  }
+
+  setupPrimaryNav(isMobile)
+
+  // EventListeners
+  btnToggle.addEventListener("click", () => {
+    if (btnToggle.getAttribute("aria-expanded") === "false") {
+      openMobileMenu()
+    } else {
+      closeMobileMenu()
+    }
+  })
+  media.addEventListener("change", (e) => {
+    setupPrimaryNav(e.matches)
+  })
+</script>

@@ -1,0 +1,27 @@
+---
+
+---
+
+<a href="#main">Skip navigation</a>
+
+<style lang="scss">
+  @use "../sass/abstracts" as *;
+
+  a {
+    position: absolute;
+    z-index: 100;
+    left: 0.5rem;
+    background-color: $color-neutral-000;
+    border: 2px solid $color-brand-400;
+    border-top: none;
+    border-radius: 0 0 0.5rem 0.5rem;
+    text-transform: uppercase;
+    padding: 0.5em 1.5em;
+    transform: translateY(-120%);
+    transition: transform 300ms ease-in;
+  }
+
+  a:focus {
+    transform: translateY(0);
+  }
+</style>

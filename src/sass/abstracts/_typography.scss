@@ -1,0 +1,39 @@
+$font-family-base: 'Lexend Deca', system-ui, sans-serif;
+$font-family-accent: 'Space Mono', system-ui, sans-serif;
+
+$font-sizes: (
+  'small': (
+    '900': 2.5rem, // Heading 1
+    '700': 2rem, // Heading 2
+    '600': 1.5rem, // Heading 3
+    '500': 1.5rem, // Heading 4
+    '450': 1.125rem, // Nav-Links
+    '400': 0.9375rem, // Body
+  ),
+  'medium': (
+    '900': 3.5rem,
+    '700': 3rem,
+    '600': 2.5rem,
+    '500': 1.5rem,
+    '450': 0.9375rem,
+    '400': 0.9375rem,
+  ),
+  'large': (
+    '900': 3.5rem,
+    '700': 3rem,
+    '600': 2.5rem,
+    '500': 1.5rem,
+    '450': 0.9375rem,
+    '400': 0.9375rem,
+  ),
+);
+
+$font-size-400: var(--fs-400);
+$font-size-450: var(--fs-450);
+$font-size-500: var(--fs-500);
+$font-size-600: var(--fs-600);
+$font-size-700: var(--fs-700);
+$font-size-900: var(--fs-900);
+
+$font-weight-default: 400;
+$font-weight-bold: 700;

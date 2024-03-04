@@ -1,0 +1,41 @@
+// global color tokens
+$-clr-white: hsl(0 0% 100%);
+$-clr-gray-200: hsl(217 37% 96%); // Snow
+$-clr-gray-300: hsl(212 41% 93%); // Light Grey
+$-clr-gray-400: hsl(217 12% 62%); // Dim Grey
+$-clr-gray-700: hsl(216 17% 35%); // Dark Navy
+$-clr-gray-900: hsl(215 14% 23%); // BG Footer + Mobile Nav
+$-clr-black: hsl(0 0% 0%);
+
+$-clr-yellow-200: hsl(39 100% 94%);
+$-clr-yellow-400: hsl(40 97% 58%);
+
+
+$light: (
+  "neutral": (
+    "000": $-clr-white,
+    "200": $-clr-gray-200,
+    "300": $-clr-gray-300,
+    "400": $-clr-gray-400,
+    "700": $-clr-gray-700,
+    "900": $-clr-gray-900,
+    "1000": $-clr-black,
+  ),
+  "brand": (
+    "200": $-clr-yellow-200,
+    "400": $-clr-yellow-400,
+  ),
+);
+
+
+// contextual color tokens
+$color-neutral-000: var(--neutral-000);
+$color-neutral-200: var(--neutral-200);
+$color-neutral-300: var(--neutral-300);
+$color-neutral-400: var(--neutral-400);
+$color-neutral-700: var(--neutral-700);
+$color-neutral-900: var(--neutral-900);
+$color-neutral-1000: var(--neutral-1000);
+
+$color-brand-200: var(--brand-200);
+$color-brand-400: var(--brand-400);

@@ -1,0 +1,46 @@
+---
+// Component imports
+import PrimaryNav from "./PrimaryNav.astro"
+---
+
+<header>
+  <div class="inner container">
+    <p class="logo" aria-hidden="true">scoot</p>
+    <PrimaryNav />
+  </div>
+</header>
+
+<style lang="scss">
+  @use "../sass/abstracts" as *;
+
+  header {
+    .inner {
+      height: 4rem;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 3.625rem;
+
+      @include mq(medium, max) {
+        display: grid;
+        grid-template-areas: "stack";
+      }
+    }
+
+    .logo {
+      font-family: $font-family-accent;
+      font-size: 2.25rem;
+      font-weight: $font-weight-bold;
+      color: $color-neutral-700;
+      line-height: 1;
+      letter-spacing: -1.5px;
+      user-select: none;
+
+      @include mq(medium, max) {
+        grid-area: stack;
+        justify-self: center;
+      }
+    }
+  }
+</style>
