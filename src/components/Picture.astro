@@ -3,7 +3,7 @@
 import { getImage } from "astro:assets"
 
 // Type imports
-import type { ImageMetadata } from "astro"
+import type { ImageMetadata, GetImageResult } from "astro"
 
 type Props = {
   imageDesktop?: ImageMetadata
@@ -28,44 +28,40 @@ const {
 } = Astro.props
 
 // Optimizing images
-const imageDesktopOpt = imageDesktop
-  ? await getImage({
-      src: imageDesktop,
+const imageDesktopOpt = await getOptimizedImg(imageDesktop)
+const imageTabletOpt = await getOptimizedImg(imageTablet)
+const imageMobileOpt = (await getOptimizedImg(imageMobile)) as GetImageResult
+
+async function getOptimizedImg(img: ImageMetadata | undefined) {
+  if (img) {
+    return await getImage({
+      src: img,
       format,
       quality,
     })
-  : undefined
-
-const imageTabletOpt = imageTablet
-  ? await getImage({
-      src: imageTablet,
-      format,
-      quality,
-    })
-  : undefined
-
-const imageMobileOpt = await getImage({
-  src: imageMobile,
-  format,
-  quality,
-})
+  } else return undefined
+}
 
 // Creating string fragments
-const strDesktop = imageDesktopOpt
-  ? `<source
-    media="(min-width: ${breakpointDesktop})"
-    srcset=${imageDesktopOpt.src}
-  />`
-  : ""
+const strDesktop = getFragmentString(imageDesktopOpt, breakpointDesktop)
+const strTablet = getFragmentString(imageTabletOpt, breakpointTablet)
+const strMobile = getFragmentString(imageMobileOpt, undefined)
 
-const strTablet = imageTabletOpt
-  ? `<source
-    media="(min-width: ${breakpointTablet})"
-    srcset=${imageTabletOpt.src}
-  />`
-  : ""
+function getFragmentString(
+  optimzedImg: GetImageResult | undefined,
+  breakpoint: string | undefined
+) {
+  if (!optimzedImg) return ""
 
-const strMobile = `<source srcset=${imageMobileOpt.src}>`
+  if (breakpoint) {
+    return `<source
+    media="(min-width: ${breakpoint})"
+    srcset=${optimzedImg.src}
+  />`
+  } else {
+    return `<source srcset=${optimzedImg.src}>`
+  }
+}
 ---
 
 <picture>

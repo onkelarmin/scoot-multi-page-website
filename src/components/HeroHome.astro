@@ -19,8 +19,6 @@ import bgMobile from "../assets/images/home-hero-mobile.jpg"
     />
   </div>
   <div class="container">
-    <div class="circles"></div>
-    <div class="arrow"></div>
     <div class="content">
       <h1 id="hero-title" class="heading-1">Scooter sharing made simple</h1>
       <div class="offset-large-screens">
@@ -30,6 +28,9 @@ import bgMobile from "../assets/images/home-hero-mobile.jpg"
           nearest bike, unlock it with a tap, and you’re away!
         </p>
         <Button>Get scootin</Button>
+        <div class="line"></div>
+        <div class="arrow"></div>
+        <div class="circles"></div>
       </div>
     </div>
   </div>
@@ -55,11 +56,8 @@ import bgMobile from "../assets/images/home-hero-mobile.jpg"
       background-color: $color-neutral-700;
     }
 
-    .container {
-      position: relative;
-    }
-
     .content {
+      position: relative;
       max-width: 55ch;
       text-align: center;
       margin-inline: auto;
@@ -91,38 +89,53 @@ import bgMobile from "../assets/images/home-hero-mobile.jpg"
       }
     }
 
-    .circles {
-      @include mq(medium) {
+    // Decorative elements
+    .arrow {
+      position: absolute;
+      width: 452px;
+      height: 151px;
+      background-image: url("../assets/patterns/right-arrow.svg");
+      background-repeat: no-repeat;
+      top: 71%;
+      right: 66%;
+
+      &::after {
+        content: url("../assets/patterns/white-circles.svg");
         position: absolute;
-        width: 234px;
-        height: 63px;
-        background-image: url("../assets/patterns/white-circles.svg");
-        background-repeat: no-repeat;
-        bottom: 45px;
-        right: -71px;
+        bottom: 6px;
+        right: -245px;
+        transform: translateX(100%);
+      }
+
+      @include mq(medium) {
+        right: 59%;
+
+        &::after {
+          right: -235px;
+        }
       }
 
       @include mq(large) {
-        bottom: 164.5px;
-        right: clamp(-13.3125rem, 19.1023rem + -37.0455vi, -3.125rem);
+        top: 52%;
+        right: -40px;
+        transform: translateX(100%);
+
+        &::after {
+          right: -102px;
+        }
       }
     }
 
-    // .arrow {
-    //   @include mq(medium) {
-    //     position: absolute;
-    //     width: 452px;
-    //     height: 151px;
-    //     background-image: url("../assets/patterns/right-arrow.svg");
-    //     background-repeat: no-repeat;
-    //     bottom: 45px;
-    //     right: -71px;
-    //   }
-
-    //   @include mq(large) {
-    //     // bottom: 164.5px;
-    //     // right: clamp(-13.3125rem, 19.1023rem + -37.0455vi, -3.125rem);
-    //   }
-    // }
+    .line {
+      @include mq(large) {
+        position: absolute;
+        width: 609px;
+        height: 15px;
+        background-color: $color-brand-400;
+        left: 38px;
+        top: 52%;
+        transform: translateX(-100%);
+      }
+    }
   }
 </style>
