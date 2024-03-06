@@ -1,7 +1,53 @@
 ---
-
+// Component imports
+import ProcessStep from "./ProcessStep.astro"
 ---
 
-<section aria-label="How It Works">
-  <div class="inner container"></div>
+<section aria-labelledby="process-title">
+  <h2 id="process-title" class="visually-hidden">How It Works</h2>
+  <div class="container">
+    <ol>
+      <ProcessStep
+        iconName="locate"
+        title="Locate with app"
+        body="Use the app to find the nearest scooter to you. We are continuously placing scooters in the areas with most demand, so one should never be too far away."
+      />
+      <ProcessStep
+        iconName="scooter"
+        title="Pick your scooter"
+        body="We show the most important info for the scooters closest to you. So you know how much charge they have left and can see roughly how much it will cost."
+      />
+      <ProcessStep
+        iconName="ride"
+        title="Enjoy the ride"
+        body="Scan the QR code and the bike will unlock. Retract the cable lock, put on a helmet, and you’re off! Always lock bikes away from walkways and accessibility ramps."
+      />
+    </ol>
+  </div>
 </section>
+
+<style lang="scss">
+  @use "../sass/abstracts" as *;
+
+  section {
+    padding-block-start: 7.5rem;
+
+    @include mq(large) {
+      padding-block-start: 10rem;
+    }
+
+    ol {
+      display: grid;
+      gap: 3rem;
+
+      @include mq(medium) {
+        gap: 2.5rem;
+      }
+
+      @include mq(large) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.875rem;
+      }
+    }
+  }
+</style>

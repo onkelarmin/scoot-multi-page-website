@@ -7,6 +7,7 @@ $font-sizes: (
     '700': 2rem, // Heading 2
     '600': 1.5rem, // Heading 3
     '500': 1.5rem, // Heading 4
+    '475': 1.25rem, // Titles Process section
     '450': 1.125rem, // Nav-Links
     '400': 0.9375rem, // Body
   ),
@@ -15,6 +16,7 @@ $font-sizes: (
     '700': 3rem,
     '600': 2.5rem,
     '500': 1.5rem,
+    '475': 1.5rem,
     '450': 0.9375rem,
     '400': 0.9375rem,
   ),
@@ -23,6 +25,7 @@ $font-sizes: (
     '700': 3rem,
     '600': 2.5rem,
     '500': 1.5rem,
+    '475': 1.5rem,
     '450': 0.9375rem,
     '400': 0.9375rem,
   ),
@@ -30,6 +33,7 @@ $font-sizes: (
 
 $font-size-400: var(--fs-400);
 $font-size-450: var(--fs-450);
+$font-size-475: var(--fs-475);
 $font-size-500: var(--fs-500);
 $font-size-600: var(--fs-600);
 $font-size-700: var(--fs-700);

@@ -48,10 +48,6 @@ import PrimaryNavToggle from "./PrimaryNavToggle.astro"
     a {
       font-family: $font-family-accent;
       text-decoration: none;
-
-      &.active {
-        display: none;
-      }
     }
 
     // Mobile
@@ -88,6 +84,10 @@ import PrimaryNavToggle from "./PrimaryNavToggle.astro"
 
       a {
         color: $color-neutral-000;
+
+        &:focus {
+          color: $color-brand-400;
+        }
       }
     }
   }
@@ -100,7 +100,6 @@ import PrimaryNavToggle from "./PrimaryNavToggle.astro"
   // Variables
   const btnToggle = document.querySelector("#btnToggle") as HTMLButtonElement
   const primaryNav = document.querySelector(".primary-nav") as HTMLElement
-  const primaryNavLinks = [...primaryNav.querySelectorAll("a")]
   const primaryNavMenu = primaryNav.querySelector(
     ".primary-nav__menu"
   )! as HTMLElement
@@ -108,14 +107,6 @@ import PrimaryNavToggle from "./PrimaryNavToggle.astro"
   const body = document.querySelector("body") as HTMLBodyElement
   const media = window.matchMedia("(width < 45em)")
   const isMobile = media.matches
-  const currentURL = window.location.href
-
-  // Removing active page from Navigation
-  primaryNavLinks.forEach((link) => {
-    if (link.href === currentURL) {
-      link.classList.add("active")
-    }
-  })
 
   // Functions
   function setupPrimaryNav(isMobile: boolean) {
@@ -138,7 +129,9 @@ import PrimaryNavToggle from "./PrimaryNavToggle.astro"
     main.setAttribute("inert", "")
     disableBodyScroll(body)
     btnToggle.focus()
+    document.addEventListener("keydown", closeMenuOnEscapeKey)
   }
+
   function closeMobileMenu() {
     btnToggle.setAttribute("aria-expanded", "false")
     primaryNavMenu.setAttribute("data-open", "false")
@@ -147,10 +140,15 @@ import PrimaryNavToggle from "./PrimaryNavToggle.astro"
     main.removeAttribute("inert")
     enableBodyScroll(body)
     btnToggle.focus()
+    document.removeEventListener("keydown", closeMenuOnEscapeKey)
 
     setTimeout(() => {
       primaryNavMenu.style.transition = "none"
     }, 500)
+  }
+
+  function closeMenuOnEscapeKey(e: KeyboardEvent) {
+    if (e.key === "Escape") closeMobileMenu()
   }
 
   setupPrimaryNav(isMobile)
