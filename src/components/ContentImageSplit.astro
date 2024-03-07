@@ -1,0 +1,140 @@
+---
+// Library imports
+import { Image } from "astro:assets"
+
+// Component imports
+import Button from "./Button.astro"
+
+type Props = {
+  title: string
+  body: string
+  btnText?: string
+  img: ImageMetadata
+  imgAltText: string
+  imgToRight?: boolean
+  variety:
+    | "arrow-right"
+    | "arrow-left-up"
+    | "arrow-left-down"
+    | "arrow-left-down-short"
+}
+
+const arrowVarieties = {
+  right: "arrow-right",
+  leftUp: "arrow-left-up",
+  leftDown: "arrow-left-down",
+  leftDownShort: "arrow-left-down-short",
+}
+
+const {
+  title,
+  body,
+  btnText,
+  img,
+  imgAltText,
+  imgToRight = false,
+  variety,
+} = Astro.props
+---
+
+<section class:list={[arrowVarieties[variety]]} aria-label={title}>
+  <div class:list={["container", "inner", { "image-to-right": imgToRight }]}>
+    <div class="image">
+      <Image src={img} alt={imgAltText} class="round" />
+    </div>
+    <div class="content">
+      <h2 class="heading-2">{title}</h2>
+      <p>{body}</p>
+      {btnText && <Button>{btnText}</Button>}
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "../sass/abstracts" as *;
+
+  section {
+    --circle-offset: 4rem;
+
+    overflow-x: hidden;
+
+    .inner {
+      display: grid;
+      justify-items: center;
+      gap: 3.5rem;
+
+      .image {
+        max-width: 445px;
+        max-height: 445px;
+        display: grid;
+        place-items: center;
+      }
+
+      .content {
+        display: grid;
+        gap: 2rem;
+        justify-items: center;
+        text-align: center;
+
+        p {
+          max-width: 63ch;
+        }
+      }
+
+      // Tablet
+      @include mq(medium) {
+        .image {
+          position: relative;
+
+          &::after {
+            content: url("../assets/patterns/circle.svg");
+            position: absolute;
+            top: 0;
+            left: calc(var(--circle-offset) * -1);
+            transform: translateX(-100%);
+          }
+        }
+
+        .content {
+          gap: 2.5rem;
+        }
+      }
+
+      // Desktop
+      @include mq(large) {
+        grid-template-columns: 1fr 1fr;
+        justify-items: start;
+        align-items: center;
+        grid-auto-flow: dense;
+
+        .content {
+          text-align: start;
+          justify-items: start;
+          gap: 1.5rem;
+
+          :last-child:not(p) {
+            margin-block-start: 1rem;
+          }
+        }
+      }
+
+      // Image to right
+
+      &.image-to-right {
+        .image {
+          @include mq(medium) {
+            &::after {
+              left: revert;
+              right: calc(var(--circle-offset) * -1);
+              transform: translateX(100%);
+            }
+          }
+
+          @include mq(large) {
+            grid-column: -2 / -1;
+          }
+        }
+      }
+    }
+  }
+</style>

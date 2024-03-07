@@ -3,9 +3,22 @@
 import HeroHome from "../components/HeroHome.astro"
 import Process from "../components/Process.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
+import ContentImageSplit from "../components/ContentImageSplit.astro"
+
+// Image imports
+import image from "../assets/images/telemetry.jpg"
 ---
 
 <BaseLayout>
   <HeroHome />
   <Process />
+  <ContentImageSplit
+    title="Easy to use riding telemetry"
+    body="The Scoot app is available with riding telemetry. This means it can show you your average speed, how long you've been using the scooter, your traveling distance, and many more things all in an easy to use app."
+    btnText="Learn More"
+    img={image}
+    imgAltText="a woman in a white shirt using her smartphone"
+    imgToRight
+    variety="arrow-left-down"
+  />
 </BaseLayout>
