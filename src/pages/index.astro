@@ -4,9 +4,12 @@ import HeroHome from "../components/HeroHome.astro"
 import Process from "../components/Process.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
 import ContentImageSplit from "../components/ContentImageSplit.astro"
+import Spacer from "../components/Spacer.astro"
 
 // Image imports
-import image from "../assets/images/telemetry.jpg"
+import telemetryImage from "../assets/images/telemetry.jpg"
+import nearYouImage from "../assets/images/near-you.jpg"
+import paymentsImage from "../assets/images/payments.jpg"
 ---
 
 <BaseLayout>
@@ -16,9 +19,27 @@ import image from "../assets/images/telemetry.jpg"
     title="Easy to use riding telemetry"
     body="The Scoot app is available with riding telemetry. This means it can show you your average speed, how long you've been using the scooter, your traveling distance, and many more things all in an easy to use app."
     btnText="Learn More"
-    img={image}
+    img={telemetryImage}
     imgAltText="a woman in a white shirt using her smartphone"
     imgToRight
     variety="arrow-left-down"
   />
+  <ContentImageSplit
+    title="Coming to a city near you"
+    body="Scoot is available in 4 major cities so far. We’re expanding rapidly, so be sure to let us know if you want to see us in your hometown. We’re aiming to let our scooters loose on 23 cities over the coming year."
+    btnText="Learn More"
+    img={nearYouImage}
+    imgAltText="busy road between skyscrapers in a metropolitan area with 2 large trees in the foreground"
+    variety="arrow-right"
+  />
+  <ContentImageSplit
+    title="Zero hassle payments"
+    body="Our payment is as easy as one two three. We accept most credit cards and debit cards. You can also link your PayPal account inside the app. Need to pay later? No worries! You can defer payment for up to a month."
+    btnText="Learn More"
+    img={paymentsImage}
+    imgAltText="a man taking a note out of his wallet"
+    imgToRight
+    variety="arrow-left-down-short"
+  />
+  <Spacer mobile="7.5rem" tablet="6.5rem" desktop="12.5rem" />
 </BaseLayout>

@@ -1,0 +1,31 @@
+---
+type Props = {
+  mobile: string
+  tablet?: string
+  desktop?: string
+}
+
+const { mobile, tablet, desktop } = Astro.props
+
+const mobileSpace = mobile
+const tabletSpace = tablet ? tablet : mobileSpace
+const desktopSpace = desktop ? desktop : tabletSpace
+---
+
+<div aria-hidden="true"></div>
+
+<style lang="scss" define:vars={{ mobileSpace, tabletSpace, desktopSpace }}>
+  @use "../sass/abstracts" as *;
+
+  div {
+    margin-block-start: var(--mobileSpace);
+
+    @include mq(medium) {
+      margin-block-start: var(--tabletSpace);
+    }
+
+    @include mq(large) {
+      margin-block-start: var(--desktopSpace);
+    }
+  }
+</style>

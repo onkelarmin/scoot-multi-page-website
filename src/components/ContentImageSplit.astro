@@ -1,10 +1,8 @@
 ---
 // Library imports
 import { Image } from "astro:assets"
-
 // Component imports
 import Button from "./Button.astro"
-
 type Props = {
   title: string
   body: string
@@ -18,14 +16,12 @@ type Props = {
     | "arrow-left-down"
     | "arrow-left-down-short"
 }
-
 const arrowVarieties = {
-  right: "arrow-right",
-  leftUp: "arrow-left-up",
-  leftDown: "arrow-left-down",
-  leftDownShort: "arrow-left-down-short",
+  "arrow-right": "arrow-right",
+  "arrow-left-up": "arrow-left-up",
+  "arrow-left-down": "arrow-left-down",
+  "arrow-left-down-short": "arrow-left-down-short",
 }
-
 const {
   title,
   body,
@@ -37,8 +33,15 @@ const {
 } = Astro.props
 ---
 
-<section class:list={[arrowVarieties[variety]]} aria-label={title}>
-  <div class:list={["container", "inner", { "image-to-right": imgToRight }]}>
+<section aria-label={title}>
+  <div
+    class:list={[
+      "container",
+      "inner",
+      { "image-to-right": imgToRight },
+      arrowVarieties[variety],
+    ]}
+  >
     <div class="image">
       <Image src={img} alt={imgAltText} class="round" />
     </div>
@@ -55,8 +58,11 @@ const {
 
   section {
     --circle-offset: 4rem;
+    --max-image-size: 445px;
 
-    overflow-x: hidden;
+    position: relative;
+    overflow-x: clip;
+    margin-block-start: 7.5rem;
 
     .inner {
       display: grid;
@@ -64,8 +70,10 @@ const {
       gap: 3.5rem;
 
       .image {
-        max-width: 445px;
-        max-height: 445px;
+        position: relative;
+
+        max-width: var(--max-image-size);
+        max-height: var(--max-image-size);
         display: grid;
         place-items: center;
       }
@@ -80,13 +88,13 @@ const {
           max-width: 63ch;
         }
       }
+    }
 
-      // Tablet
-      @include mq(medium) {
+    // Tablet
+    @include mq(medium) {
+      .inner {
         .image {
-          position: relative;
-
-          &::after {
+          &::before {
             content: url("../assets/patterns/circle.svg");
             position: absolute;
             top: 0;
@@ -99,13 +107,21 @@ const {
           gap: 2.5rem;
         }
       }
+    }
 
-      // Desktop
-      @include mq(large) {
+    // Desktop
+    @include mq(large) {
+      margin-block-start: 10rem;
+
+      .inner {
         grid-template-columns: 1fr 1fr;
         justify-items: start;
         align-items: center;
         grid-auto-flow: dense;
+
+        .image {
+          justify-self: start;
+        }
 
         .content {
           text-align: start;
@@ -117,22 +133,84 @@ const {
           }
         }
       }
+    }
 
-      // Image to right
+    // Image to right
 
-      &.image-to-right {
-        .image {
-          @include mq(medium) {
-            &::after {
-              left: revert;
-              right: calc(var(--circle-offset) * -1);
-              transform: translateX(100%);
-            }
+    .image-to-right {
+      .image {
+        @include mq(medium) {
+          &::before {
+            left: revert;
+            right: calc(var(--circle-offset) * -1);
+            transform: translateX(100%);
           }
+        }
 
-          @include mq(large) {
-            grid-column: -2 / -1;
-          }
+        @include mq(large) {
+          grid-column: -2 / -1;
+          justify-self: end;
+        }
+      }
+    }
+
+    // Arrows
+    .arrow-right {
+      &::after {
+        content: url("../assets/patterns/right-arrow.svg");
+        position: absolute;
+        top: 0;
+        right: 30%;
+
+        @include mq(40em) {
+          left: 0;
+          right: revert;
+        }
+
+        @include mq(medium) {
+          transform: translateX(-20%);
+        }
+      }
+    }
+
+    .arrow-left-down {
+      &::after {
+        content: url("../assets/patterns/left-downward-arrow.svg");
+        position: absolute;
+        top: min(
+          100vw - ($container-min-margin-inline-small-screens * 2),
+          var(--max-image-size)
+        );
+        left: $container-min-margin-inline-small-screens;
+        transform: translate(0, -100%);
+
+        @include mq(medium) {
+          left: $container-min-margin-inline-medium-screens;
+        }
+
+        @include mq(48.75em) {
+          left: revert;
+          right: 0;
+          transform: translate(
+            clamp(0rem, 18.75rem + -20.8333vi, 6.25rem),
+            -100%
+          );
+        }
+      }
+    }
+
+    .arrow-left-down-short {
+      &::after {
+        content: url("../assets/patterns/left-downward-arrow.svg");
+        position: absolute;
+        top: 0;
+        left: 43%;
+
+        @include mq(medium) {
+          top: 77.5px;
+          left: revert;
+          right: 0;
+          transform: translateX(50%);
         }
       }
     }
