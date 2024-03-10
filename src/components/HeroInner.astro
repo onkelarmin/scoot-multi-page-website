@@ -1,0 +1,20 @@
+---
+type Props = {
+  title: string
+}
+
+const { title } = Astro.props
+---
+
+<section aria-labelledby="page-title">
+  <div class="container">
+    <h1 id="page-title" class="heading-1">{title}</h1>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "../sass/abstracts" as *;
+
+  section {
+  }
+</style>
