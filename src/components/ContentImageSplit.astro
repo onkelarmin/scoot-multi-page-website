@@ -173,6 +173,36 @@ const {
       }
     }
 
+    .arrow-left-up {
+      &::after {
+        content: url("../assets/patterns/left-upward-arrow.svg");
+        position: absolute;
+        top: min(
+          100vw - ($container-min-margin-inline-small-screens * 2),
+          var(--max-image-size)
+        );
+        left: $container-min-margin-inline-small-screens;
+        transform: translate(0, -120%);
+
+        @include mq(medium) {
+          left: $container-min-margin-inline-medium-screens;
+        }
+
+        @include mq(48.75em) {
+          left: revert;
+          right: 0;
+          transform: translate(
+            clamp(0rem, 18.75rem + -20.8333vi, 6.25rem),
+            -120%
+          );
+
+          @include mq(large) {
+            transform: translate(clamp(0rem, 54rem + -60vi, 18rem), -120%);
+          }
+        }
+      }
+    }
+
     .arrow-left-down {
       &::after {
         content: url("../assets/patterns/left-downward-arrow.svg");

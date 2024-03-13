@@ -1,0 +1,65 @@
+---
+// Component imports
+import RoundedCard from "./RoundedCard.astro"
+
+// Image imports
+import ourTechImage from "../assets/images/our-tech.jpg"
+import ourCommunityImage from "../assets/images/our-community.jpg"
+import ourIntegrityImage from "../assets/images/our-integrity.jpg"
+
+type Props = {
+  title: string
+}
+
+const { title } = Astro.props
+---
+
+<section aria-label={title}>
+  <div class="container">
+    <h2 class="heading-2 text-center">{title}</h2>
+    <ul>
+      <RoundedCard
+        title="Our tech"
+        img={ourTechImage}
+        body="We’re using cutting edge technology to drive accessible urban transportation forward. Our fully electric scooters are a joy to ride!"
+        num="01"
+      />
+      <RoundedCard
+        title="Our integrity"
+        img={ourIntegrityImage}
+        body="We are fully committed to deliver a great yet safe, sustainable micro-mobility experience in every city we serve."
+        num="02"
+      />
+      <RoundedCard
+        title="Our community"
+        img={ourCommunityImage}
+        body="We support every community we serve. All workers are paid a living wage based on their location and are Scoot employees."
+        num="03"
+      />
+    </ul>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "../sass/abstracts" as *;
+
+  section {
+    margin-block-start: 7.5rem;
+
+    ul {
+      display: grid;
+      justify-items: center;
+      gap: 3.5rem;
+      margin-block: 4rem;
+
+      @include mq(medium) {
+        margin-block: 6.5rem;
+      }
+
+      @include mq(large) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.875rem;
+      }
+    }
+  }
+</style>

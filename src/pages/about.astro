@@ -1,8 +1,39 @@
 ---
+// Component imports
 import HeroInner from "../components/HeroInner.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
+import ContentImageSplit from "../components/ContentImageSplit.astro"
+
+// Image imports
+import heroImageDesktop from "../assets/images/about-hero-desktop.jpg"
+import heroImageTablet from "../assets/images/about-hero-tablet.jpg"
+import heroImageMobile from "../assets/images/about-hero-mobile.jpg"
+import digitalEraImage from "../assets/images/digital-era.jpg"
+import betterLivingImage from "../assets/images/better-living.jpg"
+import RoundedCardsSplit from "../components/RoundedCardsSplit.astro"
 ---
 
 <BaseLayout>
-  <HeroInner title="About" />
+  <HeroInner
+    title="About"
+    imgDesktop={heroImageDesktop}
+    imgTablet={heroImageTablet}
+    imgMobile={heroImageMobile}
+  />
+  <ContentImageSplit
+    title="Mobility for the digital era"
+    body="Getting around should be simple (and even fun!) for everyone. We embrace technology to provide low cost, smart access to scooters at your fingertips."
+    img={digitalEraImage}
+    imgAltText="a woman using her smartphone outside"
+    imgToRight
+    variety="arrow-left-up"
+  />
+  <ContentImageSplit
+    title="Better urban living"
+    body="We’re helping connect cities and bring people closer together. Our scooters are also fully-electric and we offset the minimal carbon footprint for each ride."
+    img={betterLivingImage}
+    imgAltText="yellow tram on a grayscale background of a metropolitan area"
+    variety="arrow-right"
+  />
+  <RoundedCardsSplit title="Our values" />
 </BaseLayout>

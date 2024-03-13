@@ -1,0 +1,64 @@
+---
+// Library imports
+import { Image } from "astro:assets"
+
+type Props = {
+  title: string
+  img: ImageMetadata
+  body: string
+  num: string
+}
+
+const { title, img, body, num } = Astro.props
+---
+
+<li>
+  <div class="image">
+    <Image
+      src={img}
+      alt="someone holding his smartphone with blurry city lights in the background"
+      class="round"
+    />
+    <div class="number heading-4" aria-hidden="true">
+      {num}
+    </div>
+  </div>
+  <h3 class="heading-3">{title}</h3>
+  <p>{body}</p>
+</li>
+
+<style lang="scss" define:vars={{ num }}>
+  @use "../sass/abstracts" as *;
+
+  li {
+    display: grid;
+    justify-items: center;
+    gap: 1.6875rem;
+    text-align: center;
+
+    .image {
+      position: relative;
+
+      .number {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%);
+        display: grid;
+        place-items: center;
+        width: 96px;
+        aspect-ratio: 1;
+        background-color: $color-brand-400;
+        border-radius: 50%;
+      }
+    }
+
+    h3 {
+      margin-block-start: 3.75rem;
+    }
+
+    p {
+      max-width: 55ch;
+    }
+  }
+</style>
