@@ -1,0 +1,145 @@
+---
+// Library imports
+import { Icon } from "astro-icon/components"
+
+type Props = {
+  id: string
+  title: string
+  body: string
+}
+
+const { id, title, body } = Astro.props
+---
+
+<li class="panel">
+  <div class="panel__header">
+    <h4 id=`panel-${id}-title` class="heading-4">{title}</h4>
+    <button
+      class="panel__trigger"
+      aria-controls=`panel-${id}-content`
+      aria-expanded="false"
+    >
+      <Icon name="chevron" width={16} height={8} />
+    </button>
+  </div>
+  <div
+    id=`panel-${id}-content`
+    class="panel__content"
+    role="region"
+    aria-labelledby=`panel-${id}-title`
+    aria-hidden="true"
+  >
+    <div>
+      <p>
+        {body}
+      </p>
+    </div>
+  </div>
+</li>
+
+<!-- Styles -->
+<style lang="scss">
+  @use "../sass/abstracts" as *;
+
+  .panel {
+    background-color: $color-neutral-200;
+    padding: 2rem;
+    transition: background-color 250ms ease-in-out;
+
+    &:is(:hover, :focus-within) {
+      background-color: $color-brand-200;
+    }
+
+    @include mq(medium) {
+      padding-inline-start: 2.5rem;
+    }
+
+    @include mq(large) {
+      padding-inline-end: 2.5rem;
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__trigger {
+      display: grid;
+      place-items: center;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      transition: transform 250ms ease-out;
+
+      &[aria-expanded="true"] {
+        transform: rotate(180deg);
+      }
+    }
+
+    &__content {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 500ms;
+
+      > div {
+        overflow: hidden;
+      }
+
+      p {
+        margin-block-start: 1.5rem;
+      }
+
+      &[aria-hidden="false"] {
+        grid-template-rows: 1fr;
+      }
+    }
+  }
+</style>
+
+<!-- Javascript -->
+<script>
+  const allPanels = [
+    ...document.querySelectorAll(".panel"),
+  ] as HTMLUListElement[]
+  const allPanelContents = [
+    ...document.querySelectorAll(".panel__content"),
+  ] as HTMLDivElement[]
+  const allPanelButtons = [
+    ...document.querySelectorAll(".panel__trigger"),
+  ] as HTMLButtonElement[]
+
+  allPanels.forEach((panel) =>
+    panel.addEventListener("click", handlePanelClick)
+  )
+
+  function handlePanelClick(e: MouseEvent) {
+    if (e.target) {
+      collapseAllPanels()
+
+      const clickedElement = e.target as HTMLElement
+      const clickedPanel = clickedElement.closest("li")!
+      const clickedPanelContent = clickedPanel.querySelector(
+        ".panel__content"
+      ) as HTMLDivElement
+      const clickedPanelButton = clickedPanel.querySelector(
+        ".panel__trigger"
+      ) as HTMLButtonElement
+
+      clickedPanelContent.setAttribute("aria-hidden", "false")
+      clickedPanelButton.setAttribute("aria-expanded", "true")
+    }
+  }
+
+  function collapseAllPanels() {
+    allPanelContents.forEach((content) =>
+      content.setAttribute("aria-hidden", "true")
+    )
+    allPanelButtons.forEach((button) =>
+      button.setAttribute("aria-expanded", "false")
+    )
+  }
+</script>
+
+<!-- TODO: opacity text?
+            collapse on click -->

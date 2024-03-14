@@ -3,6 +3,8 @@
 import HeroInner from "../components/HeroInner.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
 import ContentImageSplit from "../components/ContentImageSplit.astro"
+import RoundedCardsSplit from "../components/RoundedCardsSplit.astro"
+import FAQ from "../components/FAQ.astro"
 
 // Image imports
 import heroImageDesktop from "../assets/images/about-hero-desktop.jpg"
@@ -10,7 +12,6 @@ import heroImageTablet from "../assets/images/about-hero-tablet.jpg"
 import heroImageMobile from "../assets/images/about-hero-mobile.jpg"
 import digitalEraImage from "../assets/images/digital-era.jpg"
 import betterLivingImage from "../assets/images/better-living.jpg"
-import RoundedCardsSplit from "../components/RoundedCardsSplit.astro"
 ---
 
 <BaseLayout>
@@ -36,4 +37,5 @@ import RoundedCardsSplit from "../components/RoundedCardsSplit.astro"
     variety="arrow-right"
   />
   <RoundedCardsSplit title="Our values" />
+  <FAQ title="FAQs" />
 </BaseLayout>

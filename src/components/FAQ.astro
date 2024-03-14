@@ -1,0 +1,78 @@
+---
+// Component imports
+import AccordionPanel from "./AccordionPanel.astro"
+
+type Props = {
+  title: string
+}
+
+const { title } = Astro.props
+---
+
+<section aria-label={title}>
+  <div class="container">
+    <h2 id="faq-title" class="heading-2 text-center">{title}</h2>
+    <section aria-labelledby="faq-section-1-title" class="faq-section">
+      <h3 id="faq-section-1-title" class="heading-3">How it works</h3>
+      <ul class="accordion">
+        <AccordionPanel
+          id="1"
+          title="How do I download the app?"
+          body="To download the Scoot app, you can search “Scoot” in both the App and Google Play stores. An even simpler way to do it would be to click the relevant link at the bottom of this page and you’ll be re-directed to the correct page."
+        />
+        <AccordionPanel
+          id="2"
+          title="Can I find a nearby Scoots?"
+          body="To download the Scoot app, you can search “Scoot” in both the App and Google Play stores. An even simpler way to do it would be to click the relevant link at the bottom of this page and you’ll be re-directed to the correct page."
+        />
+        <AccordionPanel
+          id="3"
+          title="Do I need a license to ride?"
+          body="To download the Scoot app, you can search “Scoot” in both the App and Google Play stores. An even simpler way to do it would be to click the relevant link at the bottom of this page and you’ll be re-directed to the correct page."
+        />
+      </ul>
+    </section>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "../sass/abstracts" as *;
+
+  section {
+    .faq-section {
+      display: grid;
+      gap: 2rem;
+      margin-block-start: 3rem;
+
+      h3 {
+        text-align: center;
+      }
+
+      @include mq(medium) {
+        margin-block-start: 4rem;
+      }
+
+      @include mq(large) {
+        grid-template-columns: 1fr 2fr;
+
+        h3 {
+          text-align: start;
+        }
+      }
+    }
+
+    .accordion {
+      display: grid;
+      gap: 1rem;
+      list-style: none;
+
+      @include mq(medium) {
+        gap: 1.5rem;
+      }
+
+      @include mq(large) {
+        gap: 1rem;
+      }
+    }
+  }
+</style>
