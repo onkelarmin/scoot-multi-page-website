@@ -1,0 +1,50 @@
+---
+// Component imports
+import OpenPosition from "./OpenPosition.astro"
+---
+
+<section aria-label="Available Positions">
+  <div class="container">
+    <ul>
+      <OpenPosition title="General Manager" location="Jakarta, Indonesia" />
+      <OpenPosition title="UI/UX Designer" location="Yokohama, Japan" />
+      <OpenPosition
+        title="Blog Content Copywriter"
+        location="New York, United States"
+      />
+      <OpenPosition
+        title="Graphic Designer"
+        location="New York, United States"
+      />
+      <OpenPosition title="Fleet Supervisor" location="Jakarta, Indonesia" />
+      <OpenPosition title="UX Analyst" location="London, United Kingdom" />
+    </ul>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "../sass/abstracts" as *;
+
+  section {
+    margin-block-start: 9rem;
+    margin-block-end: 7.5rem;
+
+    @include mq(medium) {
+      margin-block-start: 7.5rem;
+    }
+
+    @include mq(large) {
+      margin-block-end: 10rem;
+    }
+
+    ul {
+      display: grid;
+      gap: 1rem;
+      list-style: none;
+
+      @include mq(large) {
+        gap: 1.5rem;
+      }
+    }
+  }
+</style>

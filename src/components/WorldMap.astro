@@ -1,0 +1,145 @@
+---
+// Component imports
+import Picture from "./Picture.astro"
+
+// Image imports
+import worldMapDesktop from "../assets/images/world-map-desktop.png"
+import worldMapTablet from "../assets/images/world-map-tablet.png"
+import worldMapMobile from "../assets/images/world-map-mobile.png"
+---
+
+<section aria-label="Our Locations">
+  <div class="container">
+    <div class="map">
+      <div class="image">
+        <Picture
+          imageDesktop={worldMapDesktop}
+          imageTablet={worldMapTablet}
+          imageMobile={worldMapMobile}
+          altText="world map"
+        />
+      </div>
+      <ul class="locations">
+        <li class="new-york">New York</li>
+        <li class="london">London</li>
+        <li class="jakarta">Jakarta</li>
+        <li class="yokohama">Yokohama</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "../sass/abstracts" as *;
+
+  section {
+    margin-block-start: 4.5rem;
+
+    ul {
+      display: grid;
+      gap: 1rem;
+      list-style: none;
+      text-align: center;
+      margin-block-start: 2.5rem;
+    }
+
+    li {
+      font-family: $font-family-accent;
+      font-size: $font-size-425;
+      letter-spacing: -1.07px;
+      color: $color-neutral-700;
+      padding: 1.375rem 2.875rem;
+      background-color: $color-brand-200;
+    }
+
+    @include mq(medium) {
+      margin-block-start: 9rem;
+
+      .map {
+        display: grid;
+        grid-template-areas: "stack";
+        place-items: center;
+
+        > * {
+          grid-area: stack;
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      ul {
+        position: relative;
+        gap: 0;
+        margin-block-start: 0;
+      }
+
+      li {
+        --triangle-size: 16px;
+
+        position: absolute;
+        top: var(--position-y);
+        left: var(--position-x);
+        background-color: $color-brand-400;
+        padding: 0.25rem 1.875rem;
+        transform: translate(-50%, calc(-50% - var(--triangle-size) + 1px));
+
+        &::after {
+          content: "";
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-left: var(--triangle-size) solid transparent;
+          border-right: var(--triangle-size) solid transparent;
+          border-top: var(--triangle-size) solid $color-brand-400;
+          bottom: 0;
+          left: 50%;
+          transform: translate(-50%, calc(var(--triangle-size) - 1px));
+        }
+
+        &.new-york {
+          --position-x: 22%;
+          --position-y: 24.5%;
+        }
+
+        &.london {
+          --position-x: 44.2%;
+          --position-y: 15%;
+        }
+
+        &.jakarta {
+          --position-x: 78.5%;
+          --position-y: 57.5%;
+        }
+
+        &.yokohama {
+          --position-x: 85.5%;
+          --position-y: 26.5%;
+        }
+      }
+    }
+
+    @include mq(large) {
+      margin-block-start: 7.5rem;
+
+      li {
+        padding: 1.375rem 2.875rem;
+
+        &.new-york {
+          --position-y: 21%;
+        }
+
+        &.london {
+          --position-y: 12%;
+        }
+
+        &.jakarta {
+          --position-y: 54.5%;
+        }
+
+        &.yokohama {
+          --position-y: 23%;
+        }
+      }
+    }
+  }
+</style>

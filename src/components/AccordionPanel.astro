@@ -43,33 +43,35 @@ const { id, title, body } = Astro.props
 
   .panel {
     background-color: $color-neutral-200;
-    padding: 2rem;
     transition: background-color 250ms ease-in-out;
 
     &:is(:hover, :focus-within) {
       background-color: $color-brand-200;
     }
 
-    @include mq(medium) {
-      padding-inline-start: 2.5rem;
-    }
-
-    @include mq(large) {
-      padding-inline-end: 2.5rem;
-    }
-
     &__header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      padding: 2rem;
+
+      @include mq(medium) {
+        padding-inline-start: 2.5rem;
+      }
+
+      @include mq(large) {
+        padding-inline-end: 2.5rem;
+      }
     }
 
     &__trigger {
+      flex-shrink: 0;
       display: grid;
       place-items: center;
       background-color: transparent;
       border: none;
-      cursor: pointer;
       transition: transform 250ms ease-out;
 
       &[aria-expanded="true"] {
@@ -80,18 +82,33 @@ const { id, title, body } = Astro.props
     &__content {
       display: grid;
       grid-template-rows: 0fr;
-      transition: grid-template-rows 500ms;
+      transition: grid-template-rows 300ms ease-out;
 
       > div {
         overflow: hidden;
       }
 
       p {
-        margin-block-start: 1.5rem;
+        opacity: 0;
+        padding: 0 2rem 2rem;
+        transition: opacity 200ms ease;
+
+        @include mq(medium) {
+          padding-inline-start: 2.5rem;
+        }
+
+        @include mq(large) {
+          padding-inline-end: 2.5rem;
+        }
       }
 
       &[aria-hidden="false"] {
         grid-template-rows: 1fr;
+
+        p {
+          opacity: 1;
+          transition: opacity 300ms ease 100ms;
+        }
       }
     }
   }
@@ -99,23 +116,33 @@ const { id, title, body } = Astro.props
 
 <!-- Javascript -->
 <script>
-  const allPanels = [
-    ...document.querySelectorAll(".panel"),
-  ] as HTMLUListElement[]
-  const allPanelContents = [
-    ...document.querySelectorAll(".panel__content"),
-  ] as HTMLDivElement[]
-  const allPanelButtons = [
-    ...document.querySelectorAll(".panel__trigger"),
-  ] as HTMLButtonElement[]
+  // Page load
+  window.addEventListener("DOMContentLoaded", () => {
+    handleAccordion()
+  })
 
-  allPanels.forEach((panel) =>
-    panel.addEventListener("click", handlePanelClick)
-  )
+  // View Transition
+  document.addEventListener("astro:after-swap", () => {
+    handleAccordion()
+  })
 
-  function handlePanelClick(e: MouseEvent) {
-    if (e.target) {
-      collapseAllPanels()
+  function handleAccordion() {
+    const allPanelHeaders = [
+      ...document.querySelectorAll(".panel__header"),
+    ] as HTMLElement[]
+    const allPanelContents = [
+      ...document.querySelectorAll(".panel__content"),
+    ] as HTMLDivElement[]
+    const allPanelButtons = [
+      ...document.querySelectorAll(".panel__trigger"),
+    ] as HTMLButtonElement[]
+
+    allPanelHeaders.forEach((panel) =>
+      panel.addEventListener("click", handlePanelClick)
+    )
+
+    function handlePanelClick(e: MouseEvent) {
+      if (!e.target) return
 
       const clickedElement = e.target as HTMLElement
       const clickedPanel = clickedElement.closest("li")!
@@ -126,20 +153,27 @@ const { id, title, body } = Astro.props
         ".panel__trigger"
       ) as HTMLButtonElement
 
-      clickedPanelContent.setAttribute("aria-hidden", "false")
-      clickedPanelButton.setAttribute("aria-expanded", "true")
+      const isExpanded =
+        clickedPanelButton.getAttribute("aria-expanded") === "true"
+          ? true
+          : false
+
+      if (isExpanded) {
+        collapseAllPanels()
+      } else {
+        collapseAllPanels()
+        clickedPanelContent.setAttribute("aria-hidden", "false")
+        clickedPanelButton.setAttribute("aria-expanded", "true")
+      }
+    }
+
+    function collapseAllPanels() {
+      allPanelContents.forEach((content) =>
+        content.setAttribute("aria-hidden", "true")
+      )
+      allPanelButtons.forEach((button) =>
+        button.setAttribute("aria-expanded", "false")
+      )
     }
   }
-
-  function collapseAllPanels() {
-    allPanelContents.forEach((content) =>
-      content.setAttribute("aria-hidden", "true")
-    )
-    allPanelButtons.forEach((button) =>
-      button.setAttribute("aria-expanded", "false")
-    )
-  }
 </script>
-
-<!-- TODO: opacity text?
-            collapse on click -->

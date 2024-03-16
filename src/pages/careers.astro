@@ -1,0 +1,34 @@
+---
+// Component imports
+import HeroInner from "../components/HeroInner.astro"
+import BaseLayout from "../layouts/BaseLayout.astro"
+import ContentImageSplit from "../components/ContentImageSplit.astro"
+import RoundedCardsSplit from "../components/RoundedCardsSplit.astro"
+import OpenPositions from "../components/OpenPositions.astro"
+
+// Image imports
+import heroImageDesktop from "../assets/images/careers-locations-hero-desktop.jpg"
+import heroImageTablet from "../assets/images/careers-locations-hero-tablet.jpg"
+import heroImageMobile from "../assets/images/careers-locations-hero-mobile.jpg"
+import joinUsImage from "../assets/images/join-us.jpg"
+---
+
+<BaseLayout>
+  <HeroInner
+    title="Careers"
+    imgDesktop={heroImageDesktop}
+    imgTablet={heroImageTablet}
+    imgMobile={heroImageMobile}
+  />
+  <ContentImageSplit
+    title="Care to join our mission?"
+    body="We’re always looking for ambitious individuals to help us on our journey. If you’re passionate about our mission to provide clean, accessible transport to improve urban living we want to hear from you!"
+    img={joinUsImage}
+    imgAltText="a man holding a tablet talking to a group of people sitting around a table"
+    imgToRight
+    variety="arrow-left-down"
+    btnText="Say Hello"
+  />
+  <RoundedCardsSplit title="Why join us?" />
+  <OpenPositions />
+</BaseLayout>

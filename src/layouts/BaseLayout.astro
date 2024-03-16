@@ -2,6 +2,9 @@
 // Stylesheet import
 import "../sass/main.scss"
 
+// View transitions
+import { ViewTransitions } from "astro:transitions"
+
 // Component imports
 import Header from "../components/Header.astro"
 import SkipNavLink from "../components/SkipNavLink.astro"
@@ -16,6 +19,7 @@ import SignUp from "../components/SignUp.astro"
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>Frontend Mentor | Scoot</title>
+    <ViewTransitions />
   </head>
   <body>
     <SkipNavLink />
@@ -25,27 +29,25 @@ import SignUp from "../components/SignUp.astro"
       <SignUp />
     </main>
     <Footer />
-  </body>
+  </body><style lang="scss">
+    @use "../sass/abstracts" as *;
+    main {
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        background-color: $color-neutral-1000;
+        opacity: 0;
+        transition: opacity 250ms ease-in-out;
+      }
+
+      &[data-overlay="true"]::after {
+        z-index: 1;
+        opacity: 0.75;
+      }
+    }
+  </style>
 </html>
-
-<style lang="scss">
-  @use "../sass/abstracts" as *;
-  main {
-    position: relative;
-
-    &::after {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      inset: 0;
-      background-color: $color-neutral-1000;
-      opacity: 0;
-      transition: opacity 250ms ease-in-out;
-    }
-
-    &[data-overlay="true"]::after {
-      z-index: 1;
-      opacity: 0.75;
-    }
-  }
-</style>

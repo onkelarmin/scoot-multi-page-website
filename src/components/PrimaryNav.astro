@@ -98,71 +98,83 @@ import PrimaryNavToggle from "./PrimaryNavToggle.astro"
   // Import body-scroll-lock
   import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock"
 
-  // Variables
-  const btnToggle = document.querySelector("#btnToggle") as HTMLButtonElement
-  const primaryNav = document.querySelector(".primary-nav") as HTMLElement
-  const primaryNavMenu = primaryNav.querySelector(
-    ".primary-nav__menu"
-  )! as HTMLElement
-  const main = document.querySelector("main") as HTMLElement
-  const body = document.querySelector("body") as HTMLBodyElement
-  const media = window.matchMedia("(width < 45em)")
-  const isMobile = media.matches
+  // Page load
+  window.addEventListener("DOMContentLoaded", () => {
+    handlePrimaryNav()
+  })
 
-  // Functions
-  function setupPrimaryNav(isMobile: boolean) {
-    if (isMobile) {
-      // is mobile
-      primaryNavMenu.setAttribute("inert", "")
-      primaryNavMenu.style.transition = "none"
-    } else {
-      // is tablet/desktop
+  // View Transition
+  document.addEventListener("astro:after-swap", () => {
+    handlePrimaryNav()
+  })
+
+  function handlePrimaryNav() {
+    // Variables
+    const btnToggle = document.querySelector("#btnToggle") as HTMLButtonElement
+    const primaryNav = document.querySelector(".primary-nav") as HTMLElement
+    const primaryNavMenu = primaryNav.querySelector(
+      ".primary-nav__menu"
+    )! as HTMLElement
+    const main = document.querySelector("main") as HTMLElement
+    const body = document.querySelector("body") as HTMLBodyElement
+    const media = window.matchMedia("(width < 45em)")
+    const isMobile = media.matches
+
+    // Functions
+    function setupPrimaryNav(isMobile: boolean) {
+      if (isMobile) {
+        // is mobile
+        primaryNavMenu.setAttribute("inert", "")
+        primaryNavMenu.style.transition = "none"
+      } else {
+        // is tablet/desktop
+        primaryNavMenu.removeAttribute("inert")
+      }
+    }
+
+    function openMobileMenu() {
+      btnToggle.setAttribute("aria-expanded", "true")
+      primaryNavMenu.setAttribute("data-open", "true")
+      main.setAttribute("data-overlay", "true")
       primaryNavMenu.removeAttribute("inert")
+      primaryNavMenu.removeAttribute("style")
+      main.setAttribute("inert", "")
+      disableBodyScroll(body)
+      btnToggle.focus()
+      document.addEventListener("keydown", closeMenuOnEscapeKey)
     }
-  }
 
-  function openMobileMenu() {
-    btnToggle.setAttribute("aria-expanded", "true")
-    primaryNavMenu.setAttribute("data-open", "true")
-    main.setAttribute("data-overlay", "true")
-    primaryNavMenu.removeAttribute("inert")
-    primaryNavMenu.removeAttribute("style")
-    main.setAttribute("inert", "")
-    disableBodyScroll(body)
-    btnToggle.focus()
-    document.addEventListener("keydown", closeMenuOnEscapeKey)
-  }
+    function closeMobileMenu() {
+      btnToggle.setAttribute("aria-expanded", "false")
+      primaryNavMenu.setAttribute("data-open", "false")
+      main.setAttribute("data-overlay", "false")
+      primaryNavMenu.setAttribute("inert", "")
+      main.removeAttribute("inert")
+      enableBodyScroll(body)
+      btnToggle.focus()
+      document.removeEventListener("keydown", closeMenuOnEscapeKey)
 
-  function closeMobileMenu() {
-    btnToggle.setAttribute("aria-expanded", "false")
-    primaryNavMenu.setAttribute("data-open", "false")
-    main.setAttribute("data-overlay", "false")
-    primaryNavMenu.setAttribute("inert", "")
-    main.removeAttribute("inert")
-    enableBodyScroll(body)
-    btnToggle.focus()
-    document.removeEventListener("keydown", closeMenuOnEscapeKey)
-
-    setTimeout(() => {
-      primaryNavMenu.style.transition = "none"
-    }, 500)
-  }
-
-  function closeMenuOnEscapeKey(e: KeyboardEvent) {
-    if (e.key === "Escape") closeMobileMenu()
-  }
-
-  setupPrimaryNav(isMobile)
-
-  // EventListeners
-  btnToggle.addEventListener("click", () => {
-    if (btnToggle.getAttribute("aria-expanded") === "false") {
-      openMobileMenu()
-    } else {
-      closeMobileMenu()
+      setTimeout(() => {
+        primaryNavMenu.style.transition = "none"
+      }, 500)
     }
-  })
-  media.addEventListener("change", (e) => {
-    setupPrimaryNav(e.matches)
-  })
+
+    function closeMenuOnEscapeKey(e: KeyboardEvent) {
+      if (e.key === "Escape") closeMobileMenu()
+    }
+
+    setupPrimaryNav(isMobile)
+
+    // EventListeners
+    btnToggle.addEventListener("click", () => {
+      if (btnToggle.getAttribute("aria-expanded") === "false") {
+        openMobileMenu()
+      } else {
+        closeMobileMenu()
+      }
+    })
+    media.addEventListener("change", (e) => {
+      setupPrimaryNav(e.matches)
+    })
+  }
 </script>

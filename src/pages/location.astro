@@ -1,5 +1,27 @@
 ---
+// Component imports
+import HeroInner from "../components/HeroInner.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
+import WorldMap from "../components/WorldMap.astro"
+import NotListed from "../components/NotListed.astro"
+
+// Image imports
+import heroImageDesktop from "../assets/images/careers-locations-hero-desktop.jpg"
+import heroImageTablet from "../assets/images/careers-locations-hero-tablet.jpg"
+import heroImageMobile from "../assets/images/careers-locations-hero-mobile.jpg"
 ---
 
-<BaseLayout />
+<BaseLayout>
+  <HeroInner
+    title="Locations"
+    imgDesktop={heroImageDesktop}
+    imgTablet={heroImageTablet}
+    imgMobile={heroImageMobile}
+  />
+  <WorldMap />
+  <NotListed
+    title="Your City Not Listed?"
+    body="If you’d like to see Scoot in your hometown, be sure to let us know. We track requests and plan launches based on demand. Feel free to message us by clicking the link or messaging us on social."
+    btnText="Message Us"
+  />
+</BaseLayout>

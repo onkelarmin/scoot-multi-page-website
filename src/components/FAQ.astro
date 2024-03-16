@@ -32,6 +32,27 @@ const { title } = Astro.props
         />
       </ul>
     </section>
+
+    <section aria-labelledby="faq-section-2-title" class="faq-section">
+      <h3 id="faq-section-2-title" class="heading-3">Safe driving</h3>
+      <ul class="accordion">
+        <AccordionPanel
+          id="4"
+          title="Should I wear a helmet?"
+          body="Yes, please do! All cities have different laws. But we strongly strongly strongly recommend always wearing a helmet regardless of the local laws. We like you and we want you to be as safe as possible while Scooting."
+        />
+        <AccordionPanel
+          id="5"
+          title="How about the rules & regulations?"
+          body="Yes, please do! All cities have different laws. But we strongly strongly strongly recommend always wearing a helmet regardless of the local laws. We like you and we want you to be as safe as possible while Scooting."
+        />
+        <AccordionPanel
+          id="6"
+          title="What if I damage my Scoot?"
+          body="Yes, please do! All cities have different laws. But we strongly strongly strongly recommend always wearing a helmet regardless of the local laws. We like you and we want you to be as safe as possible while Scooting."
+        />
+      </ul>
+    </section>
   </div>
 </section>
 
@@ -39,6 +60,17 @@ const { title } = Astro.props
   @use "../sass/abstracts" as *;
 
   section {
+    margin-block-start: 9rem;
+    margin-block-end: 7.5rem;
+
+    @include mq(medium) {
+      margin-block-start: 7.5rem;
+    }
+
+    @include mq(large) {
+      margin-block-end: 10rem;
+    }
+
     .faq-section {
       display: grid;
       gap: 2rem;
